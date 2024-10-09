@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>Website Analytics Data Collection</h1>
+<h2>Track User Interactions</h2>
+
+<p>Wait 3 seconds after interactions before the data is sent to the server.</p>
+
+<button onclick="trackInteraction('button click')">Click Me</button>
+<button onclick="trackInteraction('page view')">View Page</button>
+
+<h1 id="demo"></h1>
+
+<script>
+let interactions = [];  // Array to store interactions
+let timeoutId;  // Variable to hold the timeout ID
+
+// Function to track user interactions
+function trackInteraction(action) {
+  interactions.push(action);  // Add the interaction to the list
+  document.getElementById("demo").innerHTML = `Interaction added: ${action}`;
+  
+  // Clear any existing timeout to reset the delay
+  clearTimeout(timeoutId);
+  
+  // Set a new timeout to send the data after 3 seconds
+  timeoutId = setTimeout(function() {
+    sendToServer(interactions);  // Send the interactions after delay
+    interactions = [];  // Clear the interactions array after sending
+  }, 3000);
+}
+
+// Simulated function to send data to the server
+function sendToServer(data) {
+  console.log("Data sent to the server:", data);
+  document.getElementById("demo").innerHTML = "Data sent to the server!";
+}
+</script>
+
+</body>
+</html>
